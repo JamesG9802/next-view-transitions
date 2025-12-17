@@ -1,6 +1,6 @@
 {
   "name": "@jamesg9802/next-view-transitions",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Forked View Transitions API for Next.js App Router",
   "main": "./dist/index.js",
