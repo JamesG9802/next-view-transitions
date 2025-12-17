@@ -5,6 +5,9 @@
   "description": "Forked View Transitions API for Next.js App Router",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "files": [
     "dist"
   ],
