@@ -7,11 +7,25 @@ const ViewTransitionsContext = createContext<
   Dispatch<SetStateAction<(() => void) | null>>
 >(null)
 
+export type ViewTransitionsProps = Readonly<{
+  children: React.ReactNode,
+
+  /**
+   * Whether transitions should trigger when the hash changes.
+   */
+  enableHashTransitions?: boolean,
+
+  /**
+   * Whether transitions should trigger when the search params change.
+   */
+  enableSearchTransitions?: boolean,
+}>;
+
 export function ViewTransitions({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+  enableHashTransitions = false,
+  enableSearchTransitions = false,
+}: ViewTransitionsProps) {
   const [finishViewTransition, setFinishViewTransition] = useState<
     null | (() => void)
   >(null)
@@ -23,7 +37,10 @@ export function ViewTransitions({
     }
   }, [finishViewTransition])
 
-  useBrowserNativeTransitions()
+  useBrowserNativeTransitions({ 
+    enableHashTransitions: enableHashTransitions,
+    enableSearchTransitions: enableSearchTransitions,
+  })
 
   return (
     <ViewTransitionsContext.Provider value={setFinishViewTransition}>
