@@ -34,12 +34,11 @@ export function useBrowserNativeTransitions({
 
     const onPopState = () => {
       const nextPath = window.location.pathname
-      const nextSearch = window.location.search
       const nextHash = window.location.hash
 
       const transitionDetected: boolean =
-        currentPathname.current != pathname ||
-        (enableHashTransitions && currentHash.current != hash);
+        currentPathname.current != nextPath ||
+        (enableHashTransitions && currentHash.current != nextHash);
 
       currentPathname.current = nextPath
       currentHash.current = nextHash
