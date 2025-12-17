@@ -7,18 +7,14 @@ import { useHash } from './use-hash'
 // the most common use cases.
 export function useBrowserNativeTransitions({
   enableHashTransitions,
-  enableSearchTransitions,
 }: {
   enableHashTransitions: boolean,
-  enableSearchTransitions: boolean
 }) {
   const pathname = usePathname()
   const hash = useHash();
-  const searchParams = useSearchParams()
 
   const currentPathname = useRef(pathname)
   const currentHash = useRef(hash)
-  const currentSearchParams = useRef(searchParams)
 
   // This is a global state to keep track of the view transition state.
   const [currentViewTransition, setCurrentViewTransition] = useState<
@@ -33,7 +29,7 @@ export function useBrowserNativeTransitions({
 
   useEffect(() => {
     if (!('startViewTransition' in document)) {
-      return () => {}
+      return () => { }
     }
 
     const onPopState = () => {
@@ -43,14 +39,12 @@ export function useBrowserNativeTransitions({
 
       const transitionDetected: boolean =
         currentPathname.current != pathname ||
-        (enableHashTransitions && currentHash.current != hash) ||
-        (enableSearchTransitions && currentSearchParams.current != searchParams);
+        (enableHashTransitions && currentHash.current != hash);
 
       currentPathname.current = nextPath
-      currentSearchParams.current = new ReadonlyURLSearchParams(nextSearch)
       currentHash.current = nextHash
 
-      if(!transitionDetected) {
+      if (!transitionDetected) {
         return;
       }
 
@@ -82,8 +76,7 @@ export function useBrowserNativeTransitions({
 
   const transitionDetected: boolean =
     currentPathname.current != pathname ||
-    (enableHashTransitions && currentHash.current != hash) ||
-    (enableSearchTransitions && currentSearchParams.current != searchParams);
+    (enableHashTransitions && currentHash.current != hash);
 
   if (currentViewTransition && transitionDetected) {
     // Whenever the pathname changes, we block the rendering of the new route
@@ -101,12 +94,11 @@ export function useBrowserNativeTransitions({
     // When the new route component is actually mounted, we finish the view
     // transition.
     currentPathname.current = pathname
-    currentSearchParams.current = searchParams
     currentHash.current = hash
 
     if (transitionRef.current) {
       transitionRef.current[1]()
       transitionRef.current = null
     }
-  }, [hash, pathname, searchParams]);
+  }, [hash, pathname]);
 }
