@@ -37,9 +37,8 @@ export function ViewTransitions({
     }
   }, [finishViewTransition])
 
-  useBrowserNativeTransitions({ 
+  useBrowserNativeTransitions({
     enableHashTransitions: enableHashTransitions,
-    enableSearchTransitions: enableSearchTransitions,
   })
 
   return (
